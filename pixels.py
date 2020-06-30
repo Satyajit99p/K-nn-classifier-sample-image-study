@@ -29,6 +29,7 @@ class SimpleDatasetLoader:
     def load(self,imagePaths,verbose=-1):
         data=[]
         labels=[]
+        
 #reads each image path and appends it into the data list
 
         for (i,imagePath) in enumerate(imagePaths):
