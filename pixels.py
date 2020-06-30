@@ -29,7 +29,6 @@ class SimpleDatasetLoader:
     def load(self,imagePaths,verbose=-1):
         data=[]
         labels=[]
-        
 #reads each image path and appends it into the data list
 
         for (i,imagePath) in enumerate(imagePaths):
@@ -44,16 +43,16 @@ class SimpleDatasetLoader:
             labels.append(label)
 
             if verbose > 0 & i > 0 & (i+1) % verbose == 0:
-                print("[INFO] processed {}/{}".format(i+1,len(imagePaths)))
+                print("[INFO] processed {}/{}".format((i+1),len(imagePaths)))
 
-            return (np.array(data),np.array(labels))
+        return (np.array(data),np.array(labels))
 
 #Command line interface
 
 ap=argparse.ArgumentParser()
 ap.add_argument("-d","--dataset",required=True,help="path to input dataset")
 ap.add_argument("-k","--neighbours",type=int,default=1,help="no.of nearest neighbours for classification")
-ap.add_argument("-j","--jobs",type=int,default=-1,help="no of jobs for Knn distance")
+ap.add_argument("-j","--jobs",type=int,default=-1,help="no of jobs from Knn distance")
 args=vars(ap.parse_args())
 
 print("[INFO] loading images...")
@@ -68,7 +67,7 @@ print("[INFO] features matrix: {:.1f}MB".format( data.nbytes / (1024 * 1000.0)))
 le=LabelEncoder()
 labels=le.fit_transform(labels)
 
-(trainX,testX,trainY,testY)=train_test_split(data,labels,test_size=0.75,random_state=42)
+(trainX,testX,trainY,testY)=train_test_split(data,labels,test_size=0.25,random_state=42)
 
 print("[INFO] evaluating k-NN classifier..")
 model=KNeighborsClassifier(n_neighbors=args["neighbours"],n_jobs=args["jobs"])
